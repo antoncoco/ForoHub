@@ -63,4 +63,8 @@ public class TopicService {
     public List<Topic> getAllTopics() {
         return this.topicRepository.findAll();
     }
+
+    public Topic getTopicById(Integer id) {
+        return this.topicRepository.getReferenceById(id);
+    }
 }

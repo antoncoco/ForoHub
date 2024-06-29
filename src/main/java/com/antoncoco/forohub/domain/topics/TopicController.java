@@ -35,4 +35,10 @@ public class TopicController {
                 .stream().map(TopicResponse::new).toList();
         return ResponseEntity.ok(topicsList);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TopicResponse> getTopicById(@PathVariable(name = "id") Integer id) {
+        TopicResponse topicResponse = new TopicResponse(topicService.getTopicById(id));
+        return ResponseEntity.ok(topicResponse);
+    }
 }
