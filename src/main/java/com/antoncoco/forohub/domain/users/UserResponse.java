@@ -5,4 +5,7 @@ public record UserResponse(
         String email,
         String biography
 ){
+    public UserResponse(User user) {
+        this(user.getName(), user.getEmail(), user.getBiography());
+    }
 }
