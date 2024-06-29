@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/topics")
@@ -26,6 +27,12 @@ public class TopicController {
         Topic topicPersisted = this.topicService.addTopic(newTopic, userToken);
         URI uri = uriBuilder.path("/topics/{id}").buildAndExpand(topicPersisted.getId()).toUri();
         return ResponseEntity.created(uri).body(new TopicResponse(topicPersisted));
+    }
 
+    @GetMapping
+    public ResponseEntity<List<TopicResponse>> getAllTopics() {
+        List<TopicResponse> topicsList = this.topicService.getAllTopics()
+                .stream().map(TopicResponse::new).toList();
+        return ResponseEntity.ok(topicsList);
     }
 }
