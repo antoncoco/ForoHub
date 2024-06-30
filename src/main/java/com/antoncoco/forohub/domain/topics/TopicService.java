@@ -78,7 +78,7 @@ public class TopicService {
 
     @Transactional
     public Topic updateTopic(UpdateTopicForm topicModifications, Integer topicId) {
-        Topic topicToModify = this.topicRepository.findById(topicId)
+        Topic topicToModify = this.topicRepository.findByIdAndStatusIsTrue(topicId)
                 .orElseThrow(() -> new EntityNotFoundException("Topic with ID:" + topicId + " not found"));
 
         Optional<Topic> possibleDuplicatedTopic = this.topicRepository
