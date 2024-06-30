@@ -1,5 +1,6 @@
-package com.antoncoco.forohub.domain.users;
+package com.antoncoco.forohub.controllers;
 
+import com.antoncoco.forohub.domain.users.*;
 import com.antoncoco.forohub.infrastructure.security.JWTService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

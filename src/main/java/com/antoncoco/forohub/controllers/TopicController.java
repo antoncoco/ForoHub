@@ -1,5 +1,6 @@
-package com.antoncoco.forohub.domain.topics;
+package com.antoncoco.forohub.controllers;
 
+import com.antoncoco.forohub.domain.topics.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
