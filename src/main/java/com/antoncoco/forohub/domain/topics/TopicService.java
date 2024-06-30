@@ -64,6 +64,10 @@ public class TopicService {
         return this.topicRepository.findAllByStatusIsTrue();
     }
 
+    public List<Topic> getFirst10TopicsCreated() {
+        return this.topicRepository.findFirst10ByStatusIsTrueOrderByCreatedAtAsc();
+    }
+
     public Topic getTopicById(Integer id) {
         return this.topicRepository.findByIdAndStatusIsTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Topic with ID:" + id + " not found"));

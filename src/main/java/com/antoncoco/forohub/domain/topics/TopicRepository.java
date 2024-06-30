@@ -11,4 +11,5 @@ public interface TopicRepository extends JpaRepository<Topic, Integer> {
     Optional<Topic> findByTitleAndMessage(String title, String message);
     List<Topic> findAllByStatusIsTrue();
     Optional<Topic> findByIdAndStatusIsTrue(Integer id);
+    List<Topic> findFirst10ByStatusIsTrueOrderByCreatedAtAsc();
 }

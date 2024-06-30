@@ -42,6 +42,13 @@ public class TopicController {
         return ResponseEntity.ok(topicResponse);
     }
 
+    @GetMapping("/first10")
+    public ResponseEntity<List<TopicResponse>> getFirst10TopicsCreated() {
+        List<TopicResponse> topicResponses = this.topicService.getFirst10TopicsCreated()
+                .stream().map(TopicResponse::new).toList();
+        return ResponseEntity.ok(topicResponses);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<TopicResponse> updateTopic(
             @PathVariable(name = "id") Integer id,
