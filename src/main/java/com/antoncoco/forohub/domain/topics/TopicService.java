@@ -61,11 +61,12 @@ public class TopicService {
     }
 
     public List<Topic> getAllTopics() {
-        return this.topicRepository.findAll();
+        return this.topicRepository.findAllByStatusIsTrue();
     }
 
     public Topic getTopicById(Integer id) {
-        return this.topicRepository.getReferenceById(id);
+        return this.topicRepository.findByIdAndStatusIsTrue(id)
+                .orElseThrow(() -> new EntityNotFoundException("Topic with ID:" + id + " not found"));
     }
 
     @Transactional
