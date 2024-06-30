@@ -67,4 +67,11 @@ public class TopicService {
     public Topic getTopicById(Integer id) {
         return this.topicRepository.getReferenceById(id);
     }
+
+    @Transactional
+    public void deleteTopicById(Integer id) {
+        Topic topic = this.topicRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Topic with ID " + id + "not found"));
+        topic.setStatus(false);
+    }
 }

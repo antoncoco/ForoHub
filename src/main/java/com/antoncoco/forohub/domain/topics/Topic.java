@@ -3,10 +3,7 @@ package com.antoncoco.forohub.domain.topics;
 import com.antoncoco.forohub.domain.courses.Course;
 import com.antoncoco.forohub.domain.users.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
@@ -32,7 +29,8 @@ public class Topic {
     private Date createdAt;
 
     @Column(name = "topic_status", insertable = false)
-    private String status;
+    @Setter
+    private Boolean status;
 
     @ManyToOne
     @JoinColumn(name = "topic_author")
