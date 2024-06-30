@@ -1,5 +1,7 @@
 package com.antoncoco.forohub.domain.topics;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/topics")
+@SecurityRequirement(name = "bearer-key")
 public class TopicController {
     private final TopicService topicService;
 
@@ -19,6 +22,7 @@ public class TopicController {
     }
 
     @PostMapping
+    @Operation(summary = "Insert a new topic into the database")
     public ResponseEntity<TopicResponse> addTopic(
             @RequestBody @Valid TopicForm newTopic,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
@@ -30,6 +34,7 @@ public class TopicController {
     }
 
     @GetMapping
+    @Operation(summary = "List all available topics in database")
     public ResponseEntity<List<TopicResponse>> getAllTopics() {
         List<TopicResponse> topicsList = this.topicService.getAllTopics()
                 .stream().map(TopicResponse::new).toList();
@@ -37,12 +42,14 @@ public class TopicController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get an available topic given its ID")
     public ResponseEntity<TopicResponse> getTopicById(@PathVariable(name = "id") Integer id) {
         TopicResponse topicResponse = new TopicResponse(topicService.getTopicById(id));
         return ResponseEntity.ok(topicResponse);
     }
 
     @GetMapping("/first10")
+    @Operation(summary = "Get the firsts 10 topic results order by created_at date ASC")
     public ResponseEntity<List<TopicResponse>> getFirst10TopicsCreated() {
         List<TopicResponse> topicResponses = this.topicService.getFirst10TopicsCreated()
                 .stream().map(TopicResponse::new).toList();
@@ -50,6 +57,7 @@ public class TopicController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update title or content of an available topic given its ID")
     public ResponseEntity<TopicResponse> updateTopic(
             @PathVariable(name = "id") Integer id,
             @RequestBody @Valid UpdateTopicForm updateTopicForm) {
@@ -58,6 +66,7 @@ public class TopicController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Logical deletion for a topic given its ID")
     public ResponseEntity<?> deleteTopicById(@PathVariable(name = "id") Integer id) {
         this.topicService.deleteTopicById(id);
         return ResponseEntity.noContent().build();

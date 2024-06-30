@@ -1,5 +1,7 @@
 package com.antoncoco.forohub.domain.courses;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/courses")
+@SecurityRequirement(name = "bearer-key")
 public class CourseController {
     private final CourseService courseService;
 
@@ -20,6 +23,7 @@ public class CourseController {
     }
 
     @PostMapping
+    @Operation(summary = "Insert a new course into the database")
     public ResponseEntity<Course> addCourse(
             @RequestBody @Valid CourseForm newCourse,
             UriComponentsBuilder uriBuilder) {

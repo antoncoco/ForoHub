@@ -1,6 +1,7 @@
 package com.antoncoco.forohub.domain.users;
 
 import com.antoncoco.forohub.infrastructure.security.JWTService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ public class UserAuthController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Login into the app, getting an JWT with its expiration time")
     public ResponseEntity<LogInResponse> login(@RequestBody @Valid LogInUserForm logInUserForm) {
         User user = this.userAuthService.authenticate(logInUserForm);
         String jwt = this.jwtService.generateToken(user);
@@ -32,6 +34,7 @@ public class UserAuthController {
     }
 
     @PostMapping("/signup")
+    @Operation(summary = "Register a new user to the app")
     public ResponseEntity<UserResponse> signUp(@RequestBody @Valid SignUpUserForm signUpUserForm) {
         User registeredUser = this.userAuthService.register(signUpUserForm);
         return ResponseEntity.ok(new UserResponse(registeredUser.getName(), registeredUser.getEmail(), registeredUser.getBiography()));
