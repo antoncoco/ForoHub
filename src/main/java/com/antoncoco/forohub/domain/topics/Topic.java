@@ -39,4 +39,13 @@ public class Topic {
     @ManyToOne
     @JoinColumn(name = "topic_course")
     private Course course;
+
+    public void updateTopic(UpdateTopicForm updateTopicForm) {
+        if (updateTopicForm.title() != null) {
+            this.title = updateTopicForm.title();
+        }
+        if (updateTopicForm.message() != null) {
+            this.message = updateTopicForm.message();
+        }
+    }
 }

@@ -42,6 +42,14 @@ public class TopicController {
         return ResponseEntity.ok(topicResponse);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<TopicResponse> updateTopic(
+            @PathVariable(name = "id") Integer id,
+            @RequestBody @Valid UpdateTopicForm updateTopicForm) {
+        TopicResponse topicResponse = new TopicResponse(this.topicService.updateTopic(updateTopicForm, id));
+        return ResponseEntity.ok(topicResponse);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTopicById(@PathVariable(name = "id") Integer id) {
         this.topicService.deleteTopicById(id);

@@ -75,4 +75,18 @@ public class TopicService {
                 .orElseThrow(() -> new EntityNotFoundException("Topic with ID " + id + "not found"));
         topic.setStatus(false);
     }
+
+    @Transactional
+    public Topic updateTopic(UpdateTopicForm topicModifications, Integer topicId) {
+        Topic topicToModify = this.topicRepository.findById(topicId)
+                .orElseThrow(() -> new EntityNotFoundException("Topic with ID:" + topicId + " not found"));
+
+        Optional<Topic> possibleDuplicatedTopic = this.topicRepository
+                .findByTitleAndMessage(topicModifications.title(), topicModifications.message());
+        if(possibleDuplicatedTopic.isPresent()) {
+            throw new ObjectAlreadyPersisted("Topic with the same title or message already exists");
+        }
+        topicToModify.updateTopic(topicModifications);
+        return topicToModify;
+    }
 }
