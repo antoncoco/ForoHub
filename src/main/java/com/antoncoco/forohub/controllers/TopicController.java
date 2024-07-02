@@ -4,6 +4,9 @@ import com.antoncoco.forohub.domain.topics.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +43,14 @@ public class TopicController {
         List<TopicResponse> topicsList = this.topicService.getAllTopics()
                 .stream().map(TopicResponse::new).toList();
         return ResponseEntity.ok(topicsList);
+    }
+
+    @GetMapping("/pagination")
+    @Operation(summary = "Get a page with topics")
+    public ResponseEntity<Page<TopicResponse>> getAllTopics(
+            @ParameterObject Pageable pageable) {
+        Page<TopicResponse> topicResponsePage = this.topicService.getPageOfTopics(pageable).map(TopicResponse::new);
+        return ResponseEntity.ok(topicResponsePage);
     }
 
     @GetMapping("/{id}")

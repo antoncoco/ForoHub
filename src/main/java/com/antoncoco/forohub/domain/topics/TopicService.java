@@ -8,6 +8,8 @@ import com.antoncoco.forohub.infrastructure.errors.ObjectAlreadyPersisted;
 import com.antoncoco.forohub.infrastructure.security.JWTService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,6 +65,11 @@ public class TopicService {
     public List<Topic> getAllTopics() {
         return this.topicRepository.findAllByStatusIsTrue();
     }
+
+    public Page<Topic> getPageOfTopics(Pageable pageable) {
+        return this.topicRepository.findAllByStatusIsTrue(pageable);
+    }
+
 
     public List<Topic> getFirst10TopicsCreated() {
         return this.topicRepository.findFirst10ByStatusIsTrueOrderByCreatedAtAsc();
